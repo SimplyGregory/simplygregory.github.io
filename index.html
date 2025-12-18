@@ -340,9 +340,6 @@
     const SERVER_IP = '18.118.124.144';
     const SERVER_PORT = 25565;
     
-    let uptimeInterval;
-    let serverStartTime;
-    
     // Check server status on load and every 10 seconds
     checkStatus();
     setInterval(checkStatus, 10000);
@@ -392,11 +389,6 @@
             } else {
                 timeRemaining.textContent = '--:--';
             }
-            
-            if (!serverStartTime) {
-                serverStartTime = Date.now();
-                startUptimeCounter();
-            }
         } else if (data.status === 'starting') {
             statusText.textContent = 'Starting...';
             statusText.className = 'status-value starting';
@@ -433,27 +425,7 @@
             bars.forEach(bar => {
                 bar.classList.remove('active', 'good', 'fair', 'poor');
             });
-            
-            if (uptimeInterval) {
-                clearInterval(uptimeInterval);
-                serverStartTime = null;
-            }
         }
-    }
-    
-    function startUptimeCounter() {
-        if (uptimeInterval) clearInterval(uptimeInterval);
-        
-        uptimeInterval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - serverStartTime) / 1000);
-            document.getElementById('uptime').textContent = formatUptime(elapsed);
-        }, 1000);
-    }
-    
-    function formatUptime(seconds) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        return `${hours}h ${minutes}m`;
     }
     
     function formatTime(seconds) {
