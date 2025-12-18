@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Winter Break SMP</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -14,40 +15,100 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #6366f1;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
         body {
             font-family: 'Courier New', monospace;
-            background: #111;
-            color: #fff;
+            background: #020617;
+            color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 80px 20px 20px;
         }
 
         .login-container {
-            background: #1e1e1e;
-            padding: 40px 30px;
-            border: 2px solid #333;
-            border-radius: 6px;
+            background: #1e293b;
+            padding: 30px 30px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
             text-align: center;
             width: 100%;
             max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .login-title {
             font-family: 'Press Start 2P', monospace;
             font-size: 16px;
-            color: #fff;
+            color: #f8fafc;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .server-status-section {
             margin-bottom: 20px;
             padding: 15px;
-            background: #111;
-            border: 2px solid #333;
-            border-radius: 4px;
+            background: #0f172a;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
         }
 
         .status-row {
@@ -62,17 +123,17 @@
         }
 
         .status-label {
-            color: #888;
+            color: #94a3b8;
             text-transform: uppercase;
         }
 
         .status-value {
-            color: #fff;
+            color: #f8fafc;
         }
 
-        .status-value.online { color: #44ff44; }
-        .status-value.offline { color: #ff5555; }
-        .status-value.starting { color: #ffff55; }
+        .status-value.online { color: #10b981; }
+        .status-value.offline { color: #ef4444; }
+        .status-value.starting { color: #f59e0b; }
 
         .connection-bars {
             display: flex;
@@ -85,7 +146,7 @@
 
         .bar {
             width: 3px;
-            background: #333;
+            background: rgba(99, 102, 241, 0.2);
             border-radius: 1px;
         }
 
@@ -95,20 +156,20 @@
         .bar:nth-child(4) { height: 80%; }
         .bar:nth-child(5) { height: 100%; }
 
-        .bar.active.good { background: #44ff44; }
-        .bar.active.fair { background: #ffff55; }
-        .bar.active.poor { background: #ff5555; }
+        .bar.active.good { background: #10b981; }
+        .bar.active.fair { background: #f59e0b; }
+        .bar.active.poor { background: #ef4444; }
 
         .server-address {
             font-family: 'Courier New', monospace;
-            color: #88ff88;
+            color: #6366f1;
             font-size: 12px;
             margin-bottom: 20px;
             display: block;
             padding: 8px;
-            background: #111;
-            border: 2px solid #333;
-            border-radius: 4px;
+            background: #0f172a;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
         }
 
         .input-group {
@@ -119,45 +180,48 @@
         .input-group label {
             display: block;
             font-size: 12px;
-            color: #aaa;
+            color: #cbd5e1;
             margin-bottom: 4px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #333;
-            border-radius: 4px;
-            background: #111;
-            color: #fff;
+            padding: 8px 10px;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            background: #0f172a;
+            color: #f8fafc;
             font-size: 12px;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #88ff88;
+            border-color: #6366f1;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 0.875rem 2rem;
             font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 12px;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 8px;
             text-transform: uppercase;
-            border: 2px solid #333;
-            background: #222;
-            color: #fff;
+            border: none;
+            background: transparent;
+            color: #f8fafc;
             margin-bottom: 10px;
-            transition: all 0.1s;
+            transition: all 0.3s ease;
+            border: 2px solid #6366f1;
         }
 
         .btn:hover:not(:disabled) {
-            background: #333;
-            border-color: #88ff88;
-            color: #88ff88;
+            background: #6366f1;
+            color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
         }
 
         .btn:disabled {
@@ -166,60 +230,69 @@
         }
 
         .btn-start {
-            border-color: #44ff44;
-            color: #44ff44;
+            border: 2px solid #10b981;
+            color: #f8fafc;
         }
 
         .btn-start:hover:not(:disabled) {
-            background: #2a3a2a;
-            border-color: #55ff55;
+            background: #10b981;
+            color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
         }
 
         .btn-stop {
-            border-color: #ff5555;
-            color: #ff5555;
+            border: 2px solid #ef4444;
+            color: #f8fafc;
         }
 
         .btn-stop:hover:not(:disabled) {
-            background: #3a1f1f;
-            border-color: #ff7777;
+            background: #ef4444;
+            color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
         }
 
         .message {
-            padding: 10px;
+            padding: 0;
             font-size: 12px;
-            border-radius: 4px;
+            border-radius: 8px;
             display: none;
-            margin-top: 10px;
+            margin-top: 20px;
+            text-align: center;
         }
 
         .message.success {
-            color: #44ff44;
-            border: 2px solid #44ff44;
-            background: #112211;
+            color: #10b981;
         }
 
         .message.error {
-            color: #ff5555;
-            border: 2px solid #ff5555;
-            background: #221111;
+            color: #ef4444;
         }
 
         .message.show {
             display: block;
         }
-
-        .footer {
-            margin-top: 15px;
-            font-size: 11px;
-            color: #666;
-        }
     </style>
 </head>
 <body>
 
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-brand">
+            <a href="index.html">&lt;Gregory /&gt;</a>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Portfolio</a></li>
+            <li><a href="MinecraftServer.html" class="nav-link">Server</a></li>
+            <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
 <div class="login-container">
-    <div class="login-title">❄ WINTER BREAK SMP</div>
+    <div class="login-title">WINTER BREAK SMP</div>
 
     <div class="server-status-section">
         <div class="status-row">
@@ -259,9 +332,6 @@
 
     <div class="message" id="message"></div>
 
-    <div class="footer">
-        Server Control Panel v1.0
-    </div>
 </div>
 
 <script>
@@ -483,7 +553,7 @@
         
         setTimeout(() => {
             message.classList.remove('show');
-        }, 5000);
+        }, 3000);
     }
 </script>
 
