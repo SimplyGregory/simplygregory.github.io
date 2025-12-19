@@ -301,7 +301,7 @@
         </div>
         <div class="status-row">
             <span class="status-label">Players:</span>
-            <span class="status-value" id="playerCount">0/7</span>
+            <span class="status-value" id="playerCount">0/20</span>
         </div>
         <div class="status-row">
             <span class="status-label">Time Left:</span>
@@ -371,7 +371,7 @@
             statusText.textContent = 'Online';
             statusText.className = 'status-value online';
             const players = data.players || 0;
-            playerCount.textContent = `${players}/7`;
+            playerCount.textContent = `${players}/20`;
             
             // Hide start controls, show stop controls
             startPasswordGroup.style.display = 'none';
@@ -392,7 +392,7 @@
         } else if (data.status === 'starting') {
             statusText.textContent = 'Starting...';
             statusText.className = 'status-value starting';
-            playerCount.textContent = '0/7';
+            playerCount.textContent = '0/20';
             
             // Show start controls (disabled), hide stop controls
             startPasswordGroup.style.display = 'block';
